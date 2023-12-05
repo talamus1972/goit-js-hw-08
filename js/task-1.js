@@ -1,7 +1,7 @@
 const images = [
   {
     preview:
-      'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__480.jpg',
+      'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__340.jpg',
     original:
       'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820_1280.jpg',
     description: 'Hokkaido Flower',
@@ -65,7 +65,10 @@ const images = [
 ];
 
 const imagesGallery = document.querySelector('.gallery');
-const colorImages = images.reduce((img, element) => img +`
+const createGalleryMarkup = images.reduce(
+  (img, element) =>
+    img +
+    `
 <li class="gallery-item">
 <a class="gallery-link" href="${element.original}">
 <img
@@ -75,12 +78,41 @@ data-source= "${element.original}"
 alt = '${element.description}' />
 </a>
 </li>
-`, '')
-imagesGallery.insertAdjacentHTML('afterbegin', colorImages);
+`,
+  ''
+);
+imagesGallery.insertAdjacentHTML('afterbegin', createGalleryMarkup);
+
+const instance = basicLigthbox.create(
+  `<img src="${event.target.dataset.source}">`
+);
+instance.show();
 
 const galleryLinks = document.querySelectorAll('.gallery-link');
 galleryLinks.forEach(link => {
-  link.addEventListener('click', (event) => {
-    event.preventDefault();    
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    onImageClick(event);
   });
 });
+
+// imagesGallery.addEventListener('click', onImageClick);
+
+const onImageClick = event => {
+  galleryLinks.forEach(link => {
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      onImageClick(event);
+    });
+  });
+
+  if (event.target.nodeName !== 'IMG') {
+    return;
+  }
+
+  document.addEventListener('keydown', event => {
+    if (eventcode === 'Escape') {
+      instance.close();
+    }
+  });
+};
