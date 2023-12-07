@@ -98,7 +98,7 @@ imagesGallery.addEventListener('click', event => {
 });
 
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && instance) {
+  if (event.key === 'Escape') {
     instance.close();
   }
 });
