@@ -83,36 +83,44 @@ alt = '${element.description}' />
 );
 imagesGallery.insertAdjacentHTML('afterbegin', createGalleryMarkup);
 
-const instance = basicLigthbox.create(
-  `<img src="${event.target.dataset.source}">`
-);
-instance.show();
+// const instance = basicLightbox.create(
+//   <img src="${event.target.dataset.source}" alt="${event.target.dataset.alt}" />
+// );
 
-const galleryLinks = document.querySelectorAll('.gallery-link');
-galleryLinks.forEach(link => {
-  link.addEventListener('click', event => {
+// const galleryLinks = document.querySelectorAll('.gallery-link');
+// galleryLinks.forEach(link => {
+//   link.addEventListener('click', event => {
+//     event.preventDefault();
+//   });
+// });
+
+// const onImageClick = event => {
+//   if (event.target.nodeName === 'IMG') {
+//     event.preventDefault();
+//     instance.show();
+//   }
+// };
+// document.addEventListener('keydown', event => {
+//   if (eventcode === 'Escape') {
+//     instance.close();
+//   }
+// });
+
+const linkDefault = event => {
+  const instance = basicLightbox.create(
+    <img
+      src="${event.target.dataset.source}"
+      alt="${event.target.dataset.alt}"
+    />
+  );
+  if (event.target.nodeName === 'IMG') {
     event.preventDefault();
-    onImageClick(event);
-  });
-});
-
-// imagesGallery.addEventListener('click', onImageClick);
-
-const onImageClick = event => {
-  galleryLinks.forEach(link => {
-    link.addEventListener('click', event => {
-      event.preventDefault();
-      onImageClick(event);
-    });
-  });
-
-  if (event.target.nodeName !== 'IMG') {
-    return;
+    instance.show();
   }
-
-  document.addEventListener('keydown', event => {
-    if (eventcode === 'Escape') {
-      instance.close();
-    }
-  });
+  if (instance.visible()) {
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape') instance.close();
+    });
+  }
 };
+istImg.addEventListener('click', linkDefault);
