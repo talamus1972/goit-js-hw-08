@@ -65,62 +65,40 @@ const images = [
 ];
 
 const imagesGallery = document.querySelector('.gallery');
-const createGalleryMarkup = images.reduce(
+imagesGallery.innerHTML = images.reduce(
   (img, element) =>
     img +
     `
 <li class="gallery-item">
 <a class="gallery-link" href="${element.original}">
-<img
-class="gallery-image"
+<img class="gallery-image"
 src = '${element.preview}' 
 data-source= "${element.original}"
-alt = '${element.description}' />
+alt = '${element.description}'/>
 </a>
 </li>
 `,
   ''
 );
-imagesGallery.insertAdjacentHTML('afterbegin', createGalleryMarkup);
 
-// const instance = basicLightbox.create(
-//   <img src="${event.target.dataset.source}" alt="${event.target.dataset.alt}" />
-// );
+imagesGallery.addEventListener('click', event => {
+  const imageID = event.target.dataset.source;
 
-// const galleryLinks = document.querySelectorAll('.gallery-link');
-// galleryLinks.forEach(link => {
-//   link.addEventListener('click', event => {
-//     event.preventDefault();
-//   });
-// });
-
-// const onImageClick = event => {
-//   if (event.target.nodeName === 'IMG') {
-//     event.preventDefault();
-//     instance.show();
-//   }
-// };
-// document.addEventListener('keydown', event => {
-//   if (eventcode === 'Escape') {
-//     instance.close();
-//   }
-// });
-
-const linkDefault = event => {
-  const instance = basicLightbox.create(
-    <img
-      src="${event.target.dataset.source}"
-      alt="${event.target.dataset.alt}"
-    />
-  );
-  if (event.target.nodeName === 'IMG') {
+  if (event.target.nodeName !== 'IMG') {
+    return;
+  } else {
     event.preventDefault();
+    const instance = basicLightbox.create(
+      `
+		<img width="1400" height="900" src="${imageID}">
+	`
+    );
     instance.show();
   }
-  if (instance.visible()) {
-    window.addEventListener('keydown', e => {
-      if (e.key === 'Escape') instance.close();
-    });
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && instance) {
+    instance.close();
   }
-};
-istImg.addEventListener('click', linkDefault);
+});
