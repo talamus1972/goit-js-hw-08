@@ -135,3 +135,5 @@ imagesGallery.addEventListener('click', event => {
 
   instance.show();
 });
+
+// https://stackdev.blog/blog/prototype-inheritance
