@@ -82,7 +82,7 @@ alt = '${element.description}'/>
 );
 
 // imagesGallery.addEventListener('click', event => {
- 
+
 //   if (event.target.nodeName !== 'IMG') {
 //     return;
 //   } else {
@@ -103,14 +103,13 @@ alt = '${element.description}'/>
 //   }
 // });
 
-
 imagesGallery.addEventListener('click', event => {
   event.preventDefault();
-  
+
   if (event.target.nodeName !== 'IMG') {
     return;
-  } 
-    
+  }
+
   let escapeGalleryHandler;
 
   const instance = basicLightbox.create(
@@ -129,11 +128,9 @@ imagesGallery.addEventListener('click', event => {
       },
       onClose: () => {
         document.removeEventListener('keydown', escapeGalleryHandler);
-      }
+      },
     }
   );
 
   instance.show();
 });
-
-// https://stackdev.blog/blog/prototype-inheritance
